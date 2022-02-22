@@ -5,9 +5,6 @@ modules:
 - name: zmywrkflw-dest-content
   type: com.sap.application.content
   requires:
-  - name: zmywrkflw-dest-srv
-    parameters:
-      content-target: true
   - name: zmywrkflw-repo-host
     parameters:
       service-key:
@@ -16,6 +13,9 @@ modules:
     parameters:
       service-key:
         name: zmywrkflw-uaa-key
+  - name: zmywrkflw-dest-srv
+    parameters:
+      content-target: true        
   parameters:
     content:
       instance:
@@ -29,7 +29,7 @@ modules:
           ServiceInstanceName: zmywrkflw-xsuaa-srv
           ServiceKeyName: zmywrkflw-uaa-key
           sap.cloud.service: zmywrkflw
-        existing_destinations_policy: ignore
+        existing_destinations_policy: update
   build-parameters:
     no-source: true
 - name: workflow-module
@@ -38,7 +38,7 @@ modules:
   requires:
   - name: wm_workflow
     parameters:
-      content-target: true
+      content-target: true    
 - name: zmywrkflw-app-content
   type: com.sap.application.content
   path: .
@@ -80,7 +80,7 @@ resources:
   type: org.cloudfoundry.managed-service
   parameters:
     config:
-      HTML5Runtime_enabled: false
+      HTML5Runtime_enabled: true
       init_data:
         instance:
           destinations:
@@ -104,4 +104,10 @@ resources:
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
-
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install --production
+    - npx -p @sap/cds-dk cds build --production
+    - npx rimraf gen/db/src/gen/data

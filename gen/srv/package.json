@@ -59,5 +59,8 @@
   },
   "sapux": [
     "app/zwrkflw"
-  ]
+  ],
+  "engines": {
+    "node": ">=12.18"
+  }
 }

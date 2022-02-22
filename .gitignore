@@ -1,0 +1,43 @@
+# CAP cap-btpform
+_out
+*.db
+connection.properties
+default-*.json
+schema.sql
+.cdsrc-private.json
+gen/
+node_modules/
+target/
+env1
+# Web IDE, App Studio
+.che/
+.gen/
+
+# MTA
+*_mta_build_tmp
+*.mtar
+mta_archives/
+/Makefile_*.mta
+resources/
+
+# Other
+.DS_Store
+*.orig
+*.log
+.npmrc
+*.flattened-pom.xml
+*.iml
+*.flattened-pom.xml
+dist/
+/app/resources/
+/app/router/package-lock.json
+srv/src/main/resources/edmx/**
+app/*/package-lock.json
+
+# IDEs
+.vscode/*
+.idea
+*.iml
+.project
+.settings
+.classpath
