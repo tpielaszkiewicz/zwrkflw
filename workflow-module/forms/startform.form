@@ -1,0 +1,92 @@
+{
+    "id": "startform",
+    "schemaVersion": "1.1.0",
+    "name": "startform",
+    "revision": "1",
+    "type": "start",
+    "readOnly": false,
+    "content": [
+        {
+            "id": "employee_name",
+            "type": "string",
+            "label": "Employee Name",
+            "readOnly": false,
+            "value": "${context.name}",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "id": "employee_id",
+            "type": "string",
+            "label": "Employee ID",
+            "readOnly": false,
+            "value": "${context.employeeId}",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "id": "salary",
+            "type": "integer",
+            "label": "Salary",
+            "readOnly": false,
+            "value": "${context.salary}",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "id": "equipment_type",
+            "type": "string",
+            "label": "Equipment Type",
+            "readOnly": false,
+            "value": "${context.equipmentType}",
+            "control": {
+                "type": "Dropdown",
+                "properties": {
+                    "items": [
+                        {
+                            "value": "None",
+                            "displayValue": "None"
+                        },
+                        {
+                            "value": "Laptop",
+                            "displayValue": "Laptop Only"
+                        },
+                        {
+                            "value": "Full",
+                            "displayValue": "Full equipment"
+                        }
+                    ]
+                }
+            },
+            "constraints": {
+                "required": true,
+                "enum": [
+                    "None",
+                    "Laptop",
+                    "Full"
+                ]
+            }
+        },
+        {
+            "id": "internal",
+            "type": "boolean",
+            "label": "Internal",
+            "readOnly": false,
+            "value": "${context.internal}",
+            "constraints": {
+                "required": false
+            }
+        }
+    ],
+    "actions": [
+        {
+            "id": "action1",
+            "text": "Start workflow",
+            "workflowDefinitionId": "com.pg.myworkflow",
+            "workflowPath": "/home/user/projects/zmywrkflw/workflow-module/workflows/MyWorkflow.workflow"
+        }
+    ]
+}

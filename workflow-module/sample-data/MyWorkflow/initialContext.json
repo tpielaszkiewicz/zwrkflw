@@ -1,0 +1,21 @@
+{
+  "employeeId": "EI5400",
+  "name": "Tomasz",
+  "surname": "Pielaszkiewicz",
+  "salary": 1200,
+  "internal": true,
+  "startDate": "2022-01-01T18:25:43.511Z",
+  "equipmentType": "None",
+  "approver": { 
+      "name": "",
+      "employeeId": ""
+   },
+  "managers": [ {
+      "name": "Sivajan Kumaran",
+      "employeeId": "XX1234"
+  },
+  {
+    "name": "Hassan ElSalamouni",
+    "employeeId": "ZY9999"
+} ]
+}

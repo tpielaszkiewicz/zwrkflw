@@ -1,0 +1,107 @@
+_schema-version: "3.2"
+ID: zmywrkflw
+version: 0.0.2
+modules:
+- name: zmywrkflw-dest-content
+  type: com.sap.application.content
+  requires:
+  - name: zmywrkflw-dest-srv
+    parameters:
+      content-target: true
+  - name: zmywrkflw-repo-host
+    parameters:
+      service-key:
+        name: zmywrkflw-repo-host-key
+  - name: zmywrkflw-xsuaa-srv
+    parameters:
+      service-key:
+        name: zmywrkflw-uaa-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: zmywrkflw_repo_host
+          ServiceInstanceName: zmywrkflw-html5-srv
+          ServiceKeyName: zmywrkflw-repo-host-key
+          sap.cloud.service: zmywrkflw
+        - Authentication: OAuth2UserTokenExchange
+          Name: zmywrkflw_uaa
+          ServiceInstanceName: zmywrkflw-xsuaa-srv
+          ServiceKeyName: zmywrkflw-uaa-key
+          sap.cloud.service: zmywrkflw
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: workflow-module
+  type: com.sap.application.content
+  path: workflow-module
+  requires:
+  - name: wm_workflow
+    parameters:
+      content-target: true
+- name: zmywrkflw-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: zmywrkflw-dest-srv
+  - name: zmywrkflw-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - compgwrkflwzwrkflw.zip
+      name: compgwrkflwzwrkflw
+      target-path: resources/
+- name: compgwrkflwzwrkflw
+  type: html5
+  path: app/zwrkflw
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: wm_workflow
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: workflow
+    service-plan: lite
+- name: zmywrkflw-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: zmywrkflw-html5-srv
+    service-plan: app-host
+- name: zmywrkflw-dest-srv
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: zmywrkflw-dest-srv
+    service-plan: lite
+- name: zmywrkflw-xsuaa-srv
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: zmywrkflw-xsuaa-srv
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+

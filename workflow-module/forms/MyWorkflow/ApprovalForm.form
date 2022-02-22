@@ -1,0 +1,92 @@
+{
+    "id": "approvalform",
+    "schemaVersion": "1.1.0",
+    "name": "ApprovalForm",
+    "revision": "1.0",
+    "type": "task",
+    "readOnly": false,
+    "content": [
+        {
+            "id": "employee",
+            "type": "string",
+            "label": "Employee",
+            "readOnly": true,
+            "value": "${context.employeeId}",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "id": "name",
+            "type": "string",
+            "label": "Name",
+            "readOnly": true,
+            "value": "${context.name}",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "id": "salary",
+            "type": "integer",
+            "label": "Salary",
+            "readOnly": false,
+            "value": "${context.salary}",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "id": "internal",
+            "type": "boolean",
+            "label": "Internal",
+            "readOnly": true,
+            "value": "${context.internal}",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "id": "equipment_type_",
+            "type": "string",
+            "label": "Equipment type ",
+            "readOnly": false,
+            "value": "${context.equipmentType}",
+            "control": {
+                "type": "Dropdown",
+                "properties": {
+                    "items": [
+                        {
+                            "value": "None",
+                            "displayValue": "No equipment"
+                        },
+                        {
+                            "value": "Laptop",
+                            "displayValue": "Laptop Only"
+                        },
+                        {
+                            "value": "Full",
+                            "displayValue": "Full equipment"
+                        }
+                    ]
+                }
+            },
+            "constraints": {
+                "required": true,
+                "enum": [
+                    "None",
+                    "Laptop",
+                    "Full"
+                ]
+            }
+        }
+    ],
+    "decisions": [
+        {
+            "id": "decision_approve",
+            "text": "Approve",
+            "decisionType": "positive"
+        }
+    ],
+    "attachments": {}
+}

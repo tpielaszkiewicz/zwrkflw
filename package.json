@@ -1,0 +1,63 @@
+{
+  "name": "zmywrkflw",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^5",
+    "express": "^4"
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "^1.96.4",
+    "sqlite3": "^5.0.2",
+    "@ui5/cli": "^2.14.1",
+    "@sap/ux-ui5-tooling": "1",
+    "@sap/ui5-builder-webide-extension": "1.0.x",
+    "ui5-task-zipper": "^0.3.1",
+    "mbt": "^1.0.15"
+  },
+  "scripts": {
+    "start": "cds run",
+    "undeploy": "cf undeploy zmywrkflw --delete-services --delete-service-keys"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es2020": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
+    },
+    "globals": {
+      "SELECT": true,
+      "INSERT": true,
+      "UPDATE": true,
+      "DELETE": true,
+      "CREATE": true,
+      "DROP": true,
+      "CDL": true,
+      "CQL": true,
+      "CXL": true,
+      "cds": true
+    },
+    "rules": {
+      "no-console": "off",
+      "require-atomic-updates": "off"
+    }
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "database": "sqlite.db"
+        }
+      }
+    }
+  },
+  "sapux": [
+    "app/zwrkflw"
+  ]
+}
