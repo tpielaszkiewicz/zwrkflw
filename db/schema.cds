@@ -19,7 +19,28 @@ entity Requests : cuid, managed {
         title       : '{i18n>RequestDescription}',
         description : '{i18n>RequestDescriptionDescription}'
     )                         @mandatory;
+    status      : Association to Status @(
+        title       : '{i18n>RequestStatus}',
+        description : '{i18n>RequestStatusDescription}'        
+    ) @readonly;
+    workflowId: String@(
+        title       : '{i18n>WorkflowId}',
+        description : '{i18n>WorkflowId}'
+    )                         ;
     
+}
+
+entity Status: managed{
+  key ID : Integer @(
+        title                  : '{i18n>StatusKey}',
+        description            : '{i18n>StatusKeyDescription}',
+        Common.Text            : name,
+        Common.TextArrangement :#TextLast
+  );
+  name: localized String            @(
+        title       : '{i18n>StatusName}',
+        description : '{i18n>StatuseNameDescription}'
+  );
 }
 
 annotate Requests with @fiori.draft.enabled {

@@ -1,0 +1,13 @@
+{
+    "name": "approuter-cds",
+    "dependencies": {
+        "@sap/approuter": "^10.11.2",
+        "jwt-decode": "^3.1.2"
+    },
+    "engines": {
+        "node": "^16"
+    },
+    "scripts": {
+        "start": "node approuter.js"
+    }
+}

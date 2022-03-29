@@ -1,7 +1,39 @@
 using RequestorService as service from '../../srv/requestor-service';
 
 annotate service.Requests with @(
+    UI.Identification        : [
+           {
+                $Type  : 'UI.DataFieldForAction',
+                Action : 'RequestorService.actionApprove',
+                Label  : 'Approve'
+            },
+            {
+                $Type  : 'UI.DataFieldForAction',
+                Action : 'RequestorService.actionReject',
+                Label  : 'Reject'
+            },
+            {
+                $Type  : 'UI.DataFieldForAction',
+                Action : 'RequestorService.actionComplete',
+                Label  : 'Complete'
+            }
+        ],
     UI.LineItem : [
+        {
+                $Type  : 'UI.DataFieldForAction',
+                Action : 'RequestorService.actionApprove',
+                Label  : 'Approve'
+            },
+            {
+                $Type  : 'UI.DataFieldForAction',
+                Action : 'RequestorService.actionReject',
+                Label  : 'Reject'
+            },
+            {
+                $Type  : 'UI.DataFieldForAction',
+                Action : 'RequestorService.actionComplete',
+                Label  : 'Complete'
+            },
         {
             $Type : 'UI.DataField',
             Value : name,
@@ -18,6 +50,14 @@ annotate service.Requests with @(
             $Type : 'UI.DataField',
             Value : description,
         },
+        {
+            $Type : 'UI.DataField',
+            Value : status.name,
+        },
+        {
+            $Type : 'UI.DataField',
+            Value : workflowId,
+        }
     ]
 );
 annotate service.Requests with @(
@@ -39,7 +79,15 @@ annotate service.Requests with @(
             {
                 $Type : 'UI.DataField',
                 Value : description,
+            }, 
+            {
+                $Type : 'UI.DataField',
+                Value : status.name,
             },
+            {
+                $Type : 'UI.DataField',
+                Value : workflowId,
+            }
         ],
     },
     UI.Facets : [
@@ -50,4 +98,6 @@ annotate service.Requests with @(
             Target : '@UI.FieldGroup#GeneratedGroup1',
         },
     ]
-);
+) {
+    workflowId @readonly
+};

@@ -86,6 +86,11 @@
             "id": "decision_approve",
             "text": "Approve",
             "decisionType": "positive"
+        },
+        {
+            "id": "decision_reject",
+            "text": "Reject",
+            "decisionType": "negative"
         }
     ],
     "attachments": {}

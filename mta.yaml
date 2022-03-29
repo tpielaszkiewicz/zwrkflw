@@ -1,10 +1,32 @@
 _schema-version: "3.2"
 ID: zmywrkflw
-version: 0.0.2
+version: 0.0.3
 modules:
+- name: zmywrkflw-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: wm_workflow
+  - name: zmywrkflw-dest-srv
+  - name: zmywrkflw-xsuaa-srv
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    ignore:
+    - default-env.json
+    - node_modules/
+    - package-lock.json
 - name: zmywrkflw-dest-content
   type: com.sap.application.content
   requires:
+  - name: wm_workflow
+    parameters:
+      service-key:
+        name: wm_workflow-key
   - name: zmywrkflw-repo-host
     parameters:
       service-key:
@@ -13,13 +35,20 @@ modules:
     parameters:
       service-key:
         name: zmywrkflw-uaa-key
+  - name: srv-api
   - name: zmywrkflw-dest-srv
     parameters:
-      content-target: true        
+      content-target: true
   parameters:
     content:
       instance:
         destinations:
+        - Authentication: OAuth2UserTokenExchange
+          Name: zmywrkflw-app-srv
+          TokenServiceInstanceName: zmywrkflw-xsuaa-srv
+          TokenServiceKeyName: zmywrkflw-uaa-key
+          URL: ~{srv-api/srv-url}
+          sap.cloud.service: zmywrkflw
         - Name: zmywrkflw_repo_host
           ServiceInstanceName: zmywrkflw-html5-srv
           ServiceKeyName: zmywrkflw-repo-host-key
@@ -29,6 +58,10 @@ modules:
           ServiceInstanceName: zmywrkflw-xsuaa-srv
           ServiceKeyName: zmywrkflw-uaa-key
           sap.cloud.service: zmywrkflw
+        - Authentication: OAuth2UserTokenExchange
+          Name: wm_workflow
+          ServiceInstanceName: wm_workflow
+          ServiceKeyName: wm_workflow-key
         existing_destinations_policy: update
   build-parameters:
     no-source: true
@@ -38,7 +71,7 @@ modules:
   requires:
   - name: wm_workflow
     parameters:
-      content-target: true    
+      content-target: true
 - name: zmywrkflw-app-content
   type: com.sap.application.content
   path: .
@@ -47,12 +80,20 @@ modules:
   - name: zmywrkflw-repo-host
     parameters:
       content-target: true
+  - name: wm_workflow
+    parameters:
+      service-key:
+        name: wm_workflow-key
   build-parameters:
     build-result: resources
     requires:
     - artifacts:
       - compgwrkflwzwrkflw.zip
       name: compgwrkflwzwrkflw
+      target-path: resources/
+    - artifacts:
+      - compgbtpzwrkflwmng.zip
+      name: compgbtpzwrkflwmng
       target-path: resources/
 - name: compgwrkflwzwrkflw
   type: html5
@@ -64,6 +105,23 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+- name: compgbtpzwrkflwmng
+  type: html5
+  path: zwrkflwmng
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: request-workflow-module
+  type: com.sap.application.content
+  path: request-workflow-module
+  requires:
+  - name: workflow
+    parameters:
+      content-target: true
 resources:
 - name: wm_workflow
   type: org.cloudfoundry.managed-service
@@ -91,6 +149,8 @@ resources:
             URL: https://ui5.sap.com
           existing_destinations_policy: update
       version: 1.0.0
+    requires:
+    - name: srv-api
     service: destination
     service-name: zmywrkflw-dest-srv
     service-plan: lite
@@ -101,6 +161,11 @@ resources:
     service: xsuaa
     service-name: zmywrkflw-xsuaa-srv
     service-plan: application
+- name: workflow
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: workflow
+    service-plan: lite
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true

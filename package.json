@@ -7,16 +7,18 @@
   "private": true,
   "dependencies": {
     "@sap/cds": "^5",
-    "express": "^4"
+    "express": "^4",
+    "fetch": "^1.1.0"
   },
   "devDependencies": {
-    "@sap/ux-specification": "^1.96.4",
-    "sqlite3": "^5.0.2",
-    "@ui5/cli": "^2.14.1",
-    "@sap/ux-ui5-tooling": "1",
     "@sap/ui5-builder-webide-extension": "1.0.x",
-    "ui5-task-zipper": "^0.3.1",
-    "mbt": "^1.0.15"
+    "@sap/ux-specification": "^1.96.4",
+    "@sap/ux-ui5-tooling": "1",
+    "@ui5/cli": "^2.14.1",
+    "mbt": "^1.0.15",
+    "node-fetch": "^3.2.3",
+    "sqlite3": "^5.0.2",
+    "ui5-task-zipper": "^0.3.1"
   },
   "scripts": {
     "start": "cds run",

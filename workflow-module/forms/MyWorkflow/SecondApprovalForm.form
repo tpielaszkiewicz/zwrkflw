@@ -1,0 +1,52 @@
+{
+    "id": "secondapprovalform",
+    "schemaVersion": "1.1.0",
+    "name": "SecondApprovalForm",
+    "revision": "1.0",
+    "type": "task",
+    "readOnly": false,
+    "content": [
+        {
+            "id": "employee",
+            "type": "string",
+            "label": "Employee",
+            "readOnly": true,
+            "value": "${context.employeeId}",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "id": "salary",
+            "type": "integer",
+            "label": "Salary",
+            "readOnly": true,
+            "value": "${context.salary}",
+            "constraints": {
+                "required": false
+            }
+        },
+        {
+            "id": "equipment_type",
+            "type": "string",
+            "label": "Equipment type",
+            "readOnly": true,
+            "value": "${context.equipmentType}",
+            "constraints": {
+                "required": false
+            }
+        }
+    ],
+    "decisions": [
+        {
+            "id": "decision_approve_2",
+            "text": "Approve",
+            "decisionType": "positive"
+        },
+        {
+            "id": "decision_reject_2",
+            "text": "Reject",
+            "decisionType": "negative"
+        }
+    ]
+}

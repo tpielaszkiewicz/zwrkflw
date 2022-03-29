@@ -103,6 +103,164 @@
           "@description": "{i18n>RequestDescriptionDescription}",
           "@mandatory": true,
           "type": "cds.String"
+        },
+        "status": {
+          "@title": "{i18n>RequestStatus}",
+          "@description": "{i18n>RequestStatusDescription}",
+          "@readonly": true,
+          "type": "cds.Association",
+          "target": "com.pg.wrkflw.db.Status",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "workflowId": {
+          "@title": "{i18n>WorkflowId}",
+          "@description": "{i18n>WorkflowId}",
+          "type": "cds.String"
+        }
+      }
+    },
+    "com.pg.wrkflw.db.Status": {
+      "kind": "entity",
+      "includes": [
+        "managed"
+      ],
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "ID": {
+          "@title": "{i18n>StatusKey}",
+          "@description": "{i18n>StatusKeyDescription}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextLast"
+          },
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "name": {
+          "@title": "{i18n>StatusName}",
+          "@description": "{i18n>StatuseNameDescription}",
+          "localized": true,
+          "type": "cds.String"
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "com.pg.wrkflw.db.Status.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "com.pg.wrkflw.db.Status.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
         }
       }
     },
@@ -110,13 +268,190 @@
       "@source": "srv/requestor-service.cds",
       "kind": "service"
     },
+    "RequestorService.Status": {
+      "kind": "entity",
+      "@readonly": true,
+      "@cds.odata.valuelist": true,
+      "projection": {
+        "from": {
+          "ref": [
+            "com.pg.wrkflw.db.Status"
+          ]
+        }
+      },
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@odata.on.insert": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "now"
+          },
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@odata.on.update": {
+            "#": "user"
+          },
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "ID": {
+          "@title": "{i18n>StatusKey}",
+          "@description": "{i18n>StatusKeyDescription}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextLast"
+          },
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "name": {
+          "@title": "{i18n>StatusName}",
+          "@description": "{i18n>StatuseNameDescription}",
+          "localized": true,
+          "type": "cds.String"
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "RequestorService.Status.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "RequestorService.Status.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "ID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "ID"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
     "RequestorService.Requests": {
       "kind": "entity",
       "@odata.draft.enabled": true,
       "@Capabilities.InsertRestrictions.Insertable": true,
       "@Capabilities.UpdateRestrictions.Updatable": true,
       "@Capabilities.DeleteRestrictions.Deletable": true,
+      "@UI.Identification": [
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "RequestorService.actionApprove",
+          "Label": "Approve"
+        },
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "RequestorService.actionReject",
+          "Label": "Reject"
+        },
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "RequestorService.actionComplete",
+          "Label": "Complete"
+        }
+      ],
       "@UI.LineItem": [
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "RequestorService.actionApprove",
+          "Label": "Approve"
+        },
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "RequestorService.actionReject",
+          "Label": "Reject"
+        },
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "RequestorService.actionComplete",
+          "Label": "Complete"
+        },
         {
           "$Type": "UI.DataField",
           "Value": {
@@ -139,6 +474,18 @@
           "$Type": "UI.DataField",
           "Value": {
             "=": "description"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "status.name"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "workflowId"
           }
         }
       ],
@@ -166,6 +513,18 @@
           "$Type": "UI.DataField",
           "Value": {
             "=": "description"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "status.name"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "workflowId"
           }
         }
       ],
@@ -281,6 +640,61 @@
           "@description": "{i18n>RequestDescriptionDescription}",
           "@mandatory": true,
           "type": "cds.String"
+        },
+        "status": {
+          "@title": "{i18n>RequestStatus}",
+          "@description": "{i18n>RequestStatusDescription}",
+          "@readonly": true,
+          "type": "cds.Association",
+          "target": "RequestorService.Status",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "workflowId": {
+          "@readonly": true,
+          "@title": "{i18n>WorkflowId}",
+          "@description": "{i18n>WorkflowId}",
+          "type": "cds.String"
+        }
+      },
+      "actions": {
+        "actionChangeStatus": {
+          "kind": "action",
+          "params": {
+            "status": {
+              "type": "cds.Integer"
+            }
+          },
+          "returns": {
+            "@fiori.draft.enabled": true,
+            "type": "RequestorService.Requests"
+          }
+        },
+        "actionApprove": {
+          "kind": "action",
+          "returns": {
+            "@fiori.draft.enabled": true,
+            "type": "RequestorService.Requests"
+          }
+        },
+        "actionReject": {
+          "kind": "action",
+          "returns": {
+            "@fiori.draft.enabled": true,
+            "type": "RequestorService.Requests"
+          }
+        },
+        "actionComplete": {
+          "kind": "action",
+          "returns": {
+            "@fiori.draft.enabled": true,
+            "type": "RequestorService.Requests"
+          }
         }
       }
     },
@@ -740,6 +1154,36 @@
         }
       }
     },
+    "com.pg.wrkflw.db.Status.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "ID": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>StatusKey}",
+          "@description": "{i18n>StatusKeyDescription}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextLast"
+          },
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "name": {
+          "@title": "{i18n>StatusName}",
+          "@description": "{i18n>StatuseNameDescription}",
+          "localized": null,
+          "type": "cds.String"
+        }
+      }
+    },
     "sap.common.Languages.texts": {
       "kind": "entity",
       "@odata.draft.enabled": false,
@@ -836,6 +1280,44 @@
           "key": true,
           "type": "cds.String",
           "length": 3
+        }
+      }
+    },
+    "RequestorService.Status.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "com.pg.wrkflw.db.Status.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "key": true,
+          "type": "cds.String",
+          "length": 14
+        },
+        "ID": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>StatusKey}",
+          "@description": "{i18n>StatusKeyDescription}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "@Common.TextArrangement": {
+            "#": "TextLast"
+          },
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "name": {
+          "@title": "{i18n>StatusName}",
+          "@description": "{i18n>StatuseNameDescription}",
+          "localized": null,
+          "type": "cds.String"
         }
       }
     }

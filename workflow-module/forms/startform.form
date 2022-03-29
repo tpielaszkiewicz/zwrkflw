@@ -2,7 +2,7 @@
     "id": "startform",
     "schemaVersion": "1.1.0",
     "name": "startform",
-    "revision": "1",
+    "revision": "1.0",
     "type": "start",
     "readOnly": false,
     "content": [
@@ -86,7 +86,7 @@
             "id": "action1",
             "text": "Start workflow",
             "workflowDefinitionId": "com.pg.myworkflow",
-            "workflowPath": "/home/user/projects/zmywrkflw/workflow-module/workflows/MyWorkflow.workflow"
+            "workflowPath": "/home/user/projects/btp-workflow/workflow-module/workflows/MyWorkflow.workflow"
         }
     ]
 }

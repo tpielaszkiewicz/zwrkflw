@@ -1,0 +1,30 @@
+<mvc:View
+    controllerName="com.pg.btp.zwrkflwmng.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+>
+    <Shell id="shell">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <content>
+                        <VBox id="container">
+                            <Button id="startInstance" text="start new workflow" press="onStartInstance"/>
+                            <Text id="labelInstance" text="Instance ID:"/>
+                            <Text id="instanceId"/>
+                            <Text id="labelTask" text="Task ID:"/>
+                            <Text id="taskId"/>
+                            <Text id="labelInstanceDec" text="Decision:"/>
+                            <Input id="decisionInput"/>
+                            <Button id="approveInstance" text="Complete current instance step" press="onTaskApprove"/>
+                            <Text id="labelWorkflowStatus" text="Workflow Status:"/>
+                            <Text id="workflowStatusId"/>
+                            
+                        </VBox>
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>
